@@ -1,6 +1,6 @@
 require 'semantic'
 
-def main()
+def main(delete=false)
   cookbook_names = get_cookbook_names_arr
   cookbook_names.each { |cookbook_name|
     puts "COOKBOOK: #{cookbook_name}"
@@ -13,6 +13,9 @@ def main()
       revision_line.shift
       revision_line.each { |cookbook_version|
         puts cookbook_version
+        if delete
+          delete_cookbook cookbook_name cookbook_version
+        end
       }
     }
     puts "\n"
@@ -68,4 +71,8 @@ def separate_revision_lines(cookbook_versions_arr)
   return revision_lines
 end
 
-main()
+def delete_cookbook(name, version)
+  `knife cookbook delete #{name} #{version}`
+end
+
+main(delete=false)
