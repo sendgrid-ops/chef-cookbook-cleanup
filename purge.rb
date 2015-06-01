@@ -14,7 +14,7 @@ def main(delete=false)
       revision_line.each { |cookbook_version|
         puts cookbook_version
         if delete
-          delete_cookbook cookbook_name cookbook_version
+          delete_cookbook(cookbook_name, cookbook_version)
         end
       }
     }
@@ -68,11 +68,12 @@ def separate_revision_lines(cookbook_versions_arr)
       last_version = version
     end
   end
+  revision_lines << cur_revision_line
   return revision_lines
 end
 
 def delete_cookbook(name, version)
-  `knife cookbook delete #{name} #{version}`
+  `knife cookbook delete -y #{name} #{version}`
 end
 
 main(delete=false)
