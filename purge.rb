@@ -1,6 +1,8 @@
+# TODO - Clean this up. At least it works.
 require 'semantic'
 
-def main(delete=false)
+# Grabs all cookbooks, iterates thorugh and does cleanup
+def main(delete)
   cookbook_names = get_cookbook_names_arr
   cookbook_names.each { |cookbook_name|
     puts "COOKBOOK: #{cookbook_name}"
@@ -22,12 +24,48 @@ def main(delete=false)
   }
 end
 
-def test()
-  filterd_cookbook_versions = get_cookbook_versions_arr 'filterd'
-  puts filterd_cookbook_versions
-  revision_lines = separate_revision_lines(filterd_cookbook_versions)
-  revision_lines.each { |revision_line|
+# Only acts on given set of cookbooks
+def main2(delete, backup)
+	cookbook_names = ['sendgrid_chef_client', 'sendgrid_minitest-handler']
+  cookbook_names.each { |cookbook_name|
+    puts "COOKBOOK: #{cookbook_name}"
+    cookbook_versions = get_cookbook_versions_arr cookbook_name
+    puts 'VERSIONS:'
+    puts cookbook_versions
+    revision_lines = separate_revision_lines(cookbook_versions)
+    puts 'DELETED VERSIONS:'
+    revision_lines.each { |revision_line|
+      revision_line.shift
+      revision_line.each { |cookbook_version|
+        puts cookbook_version
+        if backup
+          backup_cookbook(cookbook_name, cookbook_version)
+        end
+        if delete
+          delete_cookbook(cookbook_name, cookbook_version)
+        end
+      }
+    }
+    puts "\n"
   }
+
+end
+
+def test()
+	cookbook_name = 'sendgrid_yum_sendgrid'
+  cookbook_versions = get_cookbook_versions_arr cookbook_name
+  revision_lines = separate_revision_lines(cookbook_versions)
+  revision_lines.each { |revision_line|
+    revision_line.shift
+    revision_line.each { |cookbook_version|
+      puts cookbook_version
+			backup_cookbook(cookbook_name, cookbook_version)
+    }
+  }
+end
+
+def backup_cookbook(name, version, path='/Users/jakepelletier/Projects/chef-cookbook-purge/backup')
+  `knife cookbook download #{name} #{version} -d #{path}/#{name}/`
 end
 
 def get_cookbook_names_arr
@@ -44,6 +82,16 @@ end
 # returns:
 # [[2.1.0], [1.1.2, 1.1.1], [0.1.0]]
 # Looks gross, I should tidy up the if/else logic
+# 0.2.39
+# 0.2.38
+# 0.2.37
+# 0.2.36
+# 0.2.35
+# 0.2.34
+# 0.2.33
+# 0.2.32
+# 0.2.24
+# 0.2.23
 def separate_revision_lines(cookbook_versions_arr)
   revision_lines = []
   cur_revision_line = []
@@ -76,4 +124,5 @@ def delete_cookbook(name, version)
   `knife cookbook delete -y #{name} #{version}`
 end
 
-main(delete=false)
+#main2(delete=false, backup=false)
+test
