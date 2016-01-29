@@ -79,7 +79,7 @@ module ChefClean
 				revision_lines << cur_revision_line
 				cur_revision_line = []
 				cur_revision_line << version
-			elsif (version_delim == 'minor' && version.minor != last_version.minor)
+			elsif (semantic_delimiter == 'minor' && version.minor != last_version.minor)
 				revision_lines << cur_revision_line
 				cur_revision_line = []
 				cur_revision_line << version
