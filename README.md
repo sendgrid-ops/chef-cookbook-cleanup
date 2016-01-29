@@ -10,16 +10,42 @@ Deletes:
 apid [1.1.1]
 ```
 
+## Setup
+```
+RUBYLIB="/Users/jakepelletier/Projects/chef/chef-cookbook-purge/lib"
+export RUBYLIB
+./bin/chefclean
+```
+
 ## Architecture
 ### UI
 bin/chefclean
 `chefclean <command>`
 
-`chefclean backup`
+```
+chefclean backup <semantic_delimiter>
 
-`chefclean purge`
+chefclean backup minor
+chefclean backup major
+```
 
-`chefclean purge <cookbook_name1> <cookbook_name2>...`
+```
+TO IMPLEMENT:
+chefclean backup <semantic_delimiter> <path>
+```
+
+```
+chefclean purge <semantic_delimiter> <delete>
+
+chefclean purge major false
+chefclean purge minor true
+```
+
+```
+TO IMPLEMENT:
+chefclean purge <semantic_delimiter> <delete> <cookbook_name1> <cookbook_name2>...
+```
+
 
 lib/chefclean.rb
 `def backup`
