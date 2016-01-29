@@ -4,12 +4,18 @@ require 'chefclean'
 
 def main(args)
   action = args.shift
+  semantic_delimiter = args.shift
+
+  def to_boolean(str)
+    str == 'true'
+  end
+
   case action
   when 'backup'
-    ChefClean.backup
+    ChefClean.backup(semantic_delimiter)
   when 'purge'
-    sem_version = args.shift
-    ChefClean.purge(false, sem_version)
+    delete = to_boolean(args.shift)
+    ChefClean.purge(delete, semantic_delimiter)
   else
     raise Exception.new('No good action')
   end
