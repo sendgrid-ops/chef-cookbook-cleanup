@@ -5,9 +5,13 @@ Currently defaults to keeping the last version in each minor revision line.
 Example:  
 ```
 Given:
-apid [2.1.0, 1.1.2, 1.1.1, 0.1.0]
-Deletes:
-apid [1.1.1]
+[2.1.0, 1.2.0, 1.1.2, 1.1.1, 1.1.0, 0.1.0]
+
+Purge/backup based on MAJOR revision deletes:
+[1.1.2, 1.1.1, 1.1.0]
+
+Purge/backup based on MINOR revision deletes:
+[1.1.1, 1.1.0]
 ```
 
 ## Setup
@@ -18,9 +22,8 @@ export RUBYLIB
 ```
 
 ## Architecture
-### UI
+### CLI
 bin/chefclean
-`chefclean <command>`
 
 ```
 chefclean backup <semantic_delimiter>
@@ -46,8 +49,12 @@ TO IMPLEMENT:
 chefclean purge <semantic_delimiter> <delete> <cookbook_name1> <cookbook_name2>...
 ```
 
-
+### Library
 lib/chefclean.rb
-`def backup`
+```
+def backup
+```
 
-`def purge(cookbooks=[])`
+```
+def purge(cookbooks=[])
+```

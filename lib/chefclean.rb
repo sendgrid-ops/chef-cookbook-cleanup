@@ -66,7 +66,7 @@ module ChefClean
   # Major
   # [[2.1.0], [1.2.0, 1.1.2, 1.1.1, 1.1.0], [0.1.0]]
   # Minor
-  # [[2.1.0], [1.2.0], [1.1.2, 1.1.1], [0.1.0]]
+  # [[2.1.0], [1.2.0], [1.1.2, 1.1.1, 1.1.0], [0.1.0]]
 	def ChefClean.separate_revision_lines(cookbook_versions_arr, semantic_delimiter='minor')
 		revision_lines = []
 		cur_revision_line = []
