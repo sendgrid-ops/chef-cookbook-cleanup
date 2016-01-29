@@ -3,14 +3,7 @@ require 'semantic'
 require 'chefclean/knifecookbook'
 
 module ChefClean
-  class Cookbook
-    @name = nil
-    @versions = []
-  end
-end
-
-module ChefClean
-  def ChefClean.backup(cookbooks=[], path='./backup')
+  def ChefClean.backup(semantic_delimiter='minor', cookbooks=[], path='./backup')
     if cookbooks.length > 0
       cookbook_names = cookbooks
     else
@@ -21,7 +14,7 @@ module ChefClean
 			cookbook_versions = KnifeCookbook.show cookbook_name
 			puts 'ALL VERSIONS:'
 			puts cookbook_versions
-			revision_lines = separate_revision_lines(cookbook_versions)
+			revision_lines = separate_revision_lines(cookbook_versions, semantic_delimiter)
 			puts 'BACKED UP VERSIONS:'
 			revision_lines.each { |revision_line|
 				revision_line.shift
@@ -34,7 +27,7 @@ module ChefClean
     }
   end
 
-  def ChefClean.purge(delete=false, semantic_version='minor', cookbooks=[])
+  def ChefClean.purge(delete=false, semantic_delimiter='minor', cookbooks=[])
     if cookbooks.length > 0
       cookbook_names = cookbooks
     else
@@ -45,7 +38,7 @@ module ChefClean
 			cookbook_versions = KnifeCookbook.show cookbook_name
 			puts 'VERSIONS:'
 			puts cookbook_versions
-			revision_lines = separate_revision_lines(cookbook_versions, semantic_version)
+			revision_lines = separate_revision_lines(cookbook_versions, semantic_delimiter)
 			puts 'DELETING VERSIONS:'
 			revision_lines.each { |revision_line|
 				revision_line.shift
@@ -67,7 +60,7 @@ module ChefClean
   # [[2.1.0], [1.2.0, 1.1.2, 1.1.1, 1.1.0], [0.1.0]]
   # Minor
   # [[2.1.0], [1.2.0], [1.1.2, 1.1.1], [0.1.0]]
-	def ChefClean.separate_revision_lines(cookbook_versions_arr, version_delim='minor')
+	def ChefClean.separate_revision_lines(cookbook_versions_arr, semantic_delimiter='minor')
 		revision_lines = []
 		cur_revision_line = []
 		last_version = nil
