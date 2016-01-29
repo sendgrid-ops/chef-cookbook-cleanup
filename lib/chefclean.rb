@@ -25,16 +25,19 @@ module ChefClean
         @logger.info("COOKBOOK: #{cookbook_name}")
         cookbook_versions = KnifeCookbook.show cookbook_name
         @logger.info('ALL VERSIONS:')
-        @logger.info(cookbook_versions)
+        cookbook_versions.each { |cookbook_version|
+          @logger.info(cookbook_version.to_s)
+        }
         revision_lines = separate_revision_lines(cookbook_versions, semantic_delimiter)
         @logger.info('BACKED UP VERSIONS:')
         revision_lines.each { |revision_line|
           revision_line.shift
           revision_line.each { |cookbook_version|
-            @logger.info(cookbook_version)
-            KnifeCookbook.backup_cookbook(cookbook_name, cookbook_version, path)
+            @logger.info(cookbook_version.to_s)
+            KnifeCookbook.download(cookbook_name, cookbook_version, path)
           }
         }
+        @logger.info('')
       }
     end
 
@@ -50,7 +53,7 @@ module ChefClean
       cookbook_names.each { |cookbook_name|
         @logger.info("COOKBOOK: #{cookbook_name}")
         cookbook_versions = KnifeCookbook.show cookbook_name
-        @logger.info('VERSIONS:')
+        @logger.info('ALL VERSIONS:')
         cookbook_versions.each { |cookbook_version|
           @logger.info(cookbook_version.to_s)
         }
