@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'chefclean'
+
+def main(args)
+  action = args.shift
+  case action
+  when 'backup'
+    ChefClean.backup
+  when 'purge'
+    sem_version = args.shift
+    ChefClean.purge(false, sem_version)
+  else
+    raise Exception.new('No good action')
+  end
+end
+
+exit main(ARGV)
