@@ -28,6 +28,9 @@ module ChefClean
   end
 
   def ChefClean.purge(delete=false, semantic_delimiter='minor', cookbooks=[])
+    if !delete
+      puts "***** DRY RUN *****"
+    end
     if cookbooks.length > 0
       cookbook_names = cookbooks
     else
@@ -39,7 +42,11 @@ module ChefClean
 			puts 'VERSIONS:'
 			puts cookbook_versions
 			revision_lines = separate_revision_lines(cookbook_versions, semantic_delimiter)
-			puts 'DELETING VERSIONS:'
+      if delete
+        puts 'DELETING VERSIONS:'
+      else
+        puts 'WOULD DELETE:'
+      end
 			revision_lines.each { |revision_line|
 				revision_line.shift
 				revision_line.each { |cookbook_version|
