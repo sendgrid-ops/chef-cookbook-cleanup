@@ -23,6 +23,7 @@ export RUBYLIB
 
 ## Output
 ```
+$ ./bin/chefclean purge major false
 I, [2016-01-29T14:01:08.082378 #16426]  INFO -- : COOKBOOK: apache2
 I, [2016-01-29T14:01:09.168337 #16426]  INFO -- : VERSIONS:
 I, [2016-01-29T14:01:09.168399 #16426]  INFO -- : 3.1.0
