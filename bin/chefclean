@@ -10,12 +10,15 @@ def main(args)
     str == 'true'
   end
 
+  logger = Logger.new(STDOUT)
+  cleaner = ChefClean::ChefClean.new(logger)
+
   case action
   when 'backup'
-    ChefClean.backup(semantic_delimiter)
+    cleaner.backup(semantic_delimiter)
   when 'purge'
     delete = to_boolean(args.shift)
-    ChefClean.purge(delete, semantic_delimiter)
+    cleaner.purge(delete, semantic_delimiter)
   else
     raise Exception.new('No good action')
   end
