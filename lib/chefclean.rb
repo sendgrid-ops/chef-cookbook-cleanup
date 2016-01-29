@@ -19,7 +19,7 @@ module ChefClean
       if cookbooks.length > 0
         cookbook_names = cookbooks
       else
-        cookbook_names = ChefClean::KnifeCookbook.list
+        cookbook_names = KnifeCookbook.list
       end
       cookbook_names.each { |cookbook_name|
         @logger.info("COOKBOOK: #{cookbook_name}")
