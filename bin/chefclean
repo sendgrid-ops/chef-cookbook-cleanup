@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'chefclean'
+require_relative '../lib/chefclean/chefclean'
 
 def main(args)
   action = args.shift

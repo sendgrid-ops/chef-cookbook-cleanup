@@ -16,9 +16,8 @@ Purge/backup based on MINOR revision deletes:
 
 ## Setup
 ```
-RUBYLIB="/Users/jakepelletier/Projects/chef/chef-cookbook-purge/lib"
-export RUBYLIB
-./bin/chefclean
+$ bundle install
+$ ./bin/chefclean
 ```
 
 ## Output

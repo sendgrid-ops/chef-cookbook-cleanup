@@ -2,7 +2,7 @@
 require 'logger'
 require 'semantic'
 
-require 'chefclean/knifecookbook'
+require_relative 'knifecookbook'
 
 module ChefClean
   class ChefClean
